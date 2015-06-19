@@ -1,4 +1,4 @@
-(ns test-app
+(ns adzerk.bootlet.test-app
   (:require [boot.pod :as pod]))
 
 (def pod (atom nil))
