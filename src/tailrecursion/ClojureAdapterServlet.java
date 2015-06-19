@@ -1,11 +1,3 @@
-/***************************************************************************************************
-*** Copyright 2014 jumblerg.
-*** All rights reserved. The use and distribution terms terms for this software are covered by the
-*** Eclipse Public License 1.0 (http://www.eclipse.org/legal/epl-v10.html). By using this software
-*** in any fashion, you are agreeing to be bound by the terms of this license.  You must not remove
-*** this notice, or any other, from this software.
-***************************************************************************************************/
-
 package tailrecursion;
 
 import clojure.lang.RT;
@@ -20,29 +12,41 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import java.io.File;
+import boot.App;
+import org.projectodd.shimdandy.ClojureRuntimeShim;
+
 public class ClojureAdapterServlet extends GenericServlet {
 
-  private static final Var REQUIRE = RT.var("clojure.core", "require");
+  public static ClojureRuntimeShim servletPod;
 
-  static { REQUIRE.invoke(Symbol.intern("tailrecursion.clojure-adapter-servlet.impl")); }
+  static {
+    if (ClojureAdapterServletContextListener.servletPod == null) {
+      try {
+        App.podjars = new File[0];
+        servletPod = App.newPod();
+        servletPod.require("tailrecursion.clojure-adapter-servlet.impl");
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    } else {
+      servletPod = ClojureAdapterServletContextListener.servletPod;
+    }
+  }
 
-  private static final Var INIT    = RT.var("tailrecursion.clojure-adapter-servlet.impl", "init");
-  private static final Var SERVICE = RT.var("tailrecursion.clojure-adapter-servlet.impl", "service");
-  private static final Var DESTROY = RT.var("tailrecursion.clojure-adapter-servlet.impl", "destroy");
 
   @Override
   public void init(ServletConfig conf) throws NullPointerException, ServletException {
-    INIT.invoke(conf);
+    servletPod.invoke("tailrecursion.clojure-adapter-servlet.impl/init", conf);
   }
 
   @Override
   public void service(ServletRequest req, ServletResponse res) throws IOException, ServletException {
-    SERVICE.invoke(req, res);
+    servletPod.invoke("tailrecursion.clojure-adapter-servlet.impl/service", req, res);
   }
 
   @Override
   public void destroy() {
-    DESTROY.invoke();
+    servletPod.invoke("tailrecursion.clojure-adapter-servlet.impl/destroy");
   }
-
 }
