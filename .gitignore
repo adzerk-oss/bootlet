@@ -18,3 +18,5 @@
 /.nrepl-port
 /pom.xml
 /target/
+/.nrepl-history
+/jetty-runner-9.2.9.v20150224.jar

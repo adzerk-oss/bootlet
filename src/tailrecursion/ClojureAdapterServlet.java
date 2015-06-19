@@ -23,7 +23,6 @@ public class ClojureAdapterServlet extends GenericServlet {
   static {
     if (ClojureAdapterServletContextListener.servletPod == null) {
       try {
-        App.podjars = new File[0];
         servletPod = App.newPod();
         servletPod.require("tailrecursion.clojure-adapter-servlet.impl");
       } catch (Exception e) {

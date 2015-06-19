@@ -17,7 +17,6 @@ public class ClojureAdapterServletContextListener implements ServletContextListe
 
   static {
     try {
-      App.podjars = new File[0];
       servletPod = App.newPod();
     } catch (Exception e) {
       e.printStackTrace();
