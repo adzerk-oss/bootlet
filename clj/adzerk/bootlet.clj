@@ -9,6 +9,7 @@
 (def ^:private deps
   [['org.clojure/clojure  (clojure-version)]
    ['boot/pod             core/*boot-version*]
+   ['adzerk.bootlet       "2.0.1"]
    ['alandipert/boot-base "2.0.0-SNAPSHOT"]
    ;; ['boot/base *app-version*]
    ])

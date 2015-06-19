@@ -6,7 +6,7 @@
 
 (require '[adzerk.bootlaces :refer :all])
 
-(def +version+ "2.0.0")
+(def +version+ "2.0.1")
 (bootlaces! +version+)
 
 (require '[adzerk.bootlet :as bootlet])
