@@ -27,7 +27,7 @@
           (file/copy-with-lastmod jar (io/file tgt (.getName jar))))
         (-> fs (core/add-resource tgt) core/commit!)))))
 
-(deftask see
+(deftask build
   []
   (comp
    (javac)
