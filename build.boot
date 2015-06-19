@@ -16,16 +16,17 @@
          '[boot.pod        :as pod])
 
 (deftask pack-boot []
-  (let [tgt (core/tmp-dir!)]
+  (let [tgt (core/tmp-dir!)
+        env {:dependencies [['org.clojure/clojure (clojure-version)]
+                            ['boot/pod *boot-version*]
+                            ['boot/base *app-version*]]}
+        jars (future (pod/resolve-dependency-jars env))]
     (core/with-pre-wrap fs
-      (core/empty-dir! tgt)
-      (let [env {:dependencies [['org.clojure/clojure (clojure-version)]
-                                ['boot/pod *boot-version*]
-                                ['boot/base *app-version*]]}]
-        (util/info "Packing boot jars...\n")
-        (doseq [jar (pod/resolve-dependency-jars env)]
-          (file/copy-with-lastmod jar (io/file tgt (.getName jar))))
-        (-> fs (core/add-resource tgt) core/commit!)))))
+      (util/info "Packing boot jars...\n")
+      (when-not (seq (.listFiles tgt))
+        (doseq [jar @jars]
+          (file/copy-with-lastmod jar (io/file tgt (.getName jar)))))
+      (-> fs (core/add-resource tgt) core/commit!))))
 
 (deftask build
   []
