@@ -7,7 +7,6 @@ import clojure.lang.Var;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import java.io.File;
 import boot.App;
 import org.projectodd.shimdandy.ClojureRuntimeShim;
 

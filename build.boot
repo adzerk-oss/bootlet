@@ -19,7 +19,9 @@
   (let [tgt (core/tmp-dir!)
         env {:dependencies [['org.clojure/clojure (clojure-version)]
                             ['boot/pod *boot-version*]
-                            ['boot/base *app-version*]]}
+                            ['alandipert/boot-base "2.0.0-SNAPSHOT"]
+                            ;; ['boot/base *app-version*]
+                            ]}
         jars (future (pod/resolve-dependency-jars env))]
     (core/with-pre-wrap fs
       (util/info "Packing boot jars...\n")

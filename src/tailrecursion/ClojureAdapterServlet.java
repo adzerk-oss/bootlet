@@ -12,7 +12,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-import java.io.File;
 import boot.App;
 import org.projectodd.shimdandy.ClojureRuntimeShim;
 
